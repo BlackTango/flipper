@@ -15,32 +15,29 @@ function httpGetAsync(theUrl, callback)
     xmlHttp.send(null);
 }
 
-function price_updater(prices){
-    prices = JSON.parse(prices);
+function price_updater(price_list){
+    prices = JSON.parse(price_list);
     console.log(prices.length);
 
     for (var i = 0; i < transactions.length; i++){
-        console.log(calculate_profit(transactions[i]).absolute,calculate_profit(transactions[i]).absolute)
+        console.log(calculate_profit(transactions[i]).relative +"%",calculate_profit(transactions[i]).absolute +"%")
     }
-
 }
 
-function get_price(name){
-    console.log(prices);
 
-    for (var i=0; i < prices.length; i++){
+function get_price(name){
+
+    for (var j=0; j < prices.length; j++){
         switch (name){
-            case prices[i].id:
-                return price[i].price_usd;
+            case prices[j].id:
+                return prices[j].price_usd;
                 break;
-            case prices[i].name:
-                return price[i].price_usd;
+            case prices[j].name:
+                return prices[j].price_usd;
                 break;
-            case price[i].symbol:
-                return price[i].price_usd;
+            case prices[j].symbol:
+                return prices[j].price_usd;
                 break;
-            default:
-            return NaN;
         }
     }
 }
@@ -50,14 +47,16 @@ function get_price(name){
 
 function calculate_profit(transaction){
 
+    console.log(prices);
+
     var profit = {absolute:0,relative:0}
     var nowA = get_price(transaction.cryptoA)
     var nowB = get_price(transaction.cryptoB)
 
-    console.log(nowA,nowB);
-
     profit.relative = (((transaction.amount_received * nowB) / (transaction.amount_sent * nowA)) - 1) * 100;
     profit.absolute = (((transaction.amount_received * nowB) / transaction.USD_received) - 1) * 100;
+    profit.relative = profit.relative.toFixed(2);
+    profit.absolute = profit.absolute.toFixed(2);
     return profit;
 }
 
@@ -68,7 +67,7 @@ function make_transaction(cryptoA,cryptoB,USD_sent,USD_received,amount_sent,amou
     amount_sent:amount_sent,amount_received:amount_received}
 }
 
-make_transaction("BTC","ETH",1000,990,1,9.9);
+make_transaction("BTC","ETH",900,864.6/2,0.04116530,0.5);
 
 httpGetAsync("https://api.coinmarketcap.com/v1/ticker/",price_updater);
 
