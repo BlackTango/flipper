@@ -17,13 +17,13 @@ function httpGetAsync(theUrl, callback)
 
 function price_updater(price_list){
     prices = JSON.parse(price_list);
-    console.log(prices.length);
 
     for (var i = 0; i < transactions.length; i++){
-        console.log(calculate_profit(transactions[i]).relative +"%",calculate_profit(transactions[i]).absolute +"%")
+        transactions[i].relative = calculate_profit(transactions[i]).relative;
+        transactions[i].absolute = calculate_profit(transactions[i]).absolute;
+        console.log(transactions[i].relative +"%",transactions[i].absolute +"%")
     }
 }
-
 
 function get_price(name){
 
@@ -46,8 +46,6 @@ function get_price(name){
 
 
 function calculate_profit(transaction){
-
-    console.log(prices);
 
     var profit = {absolute:0,relative:0}
     var nowA = get_price(transaction.cryptoA)
