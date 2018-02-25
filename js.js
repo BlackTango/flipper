@@ -46,6 +46,8 @@ function get_price(name){
 }
 
 
+
+
 function calculate_profit(transaction){
 
     var profit = {absolute:0,relative:0}
