@@ -33,7 +33,7 @@ $(document).ready(function () {
         }
 
         for (var i = 0; i < transactions.length; i++) {
-            $(table).append('<tr><td><a href="#modal1" class=" modal-trigger waves-effect waves-light btn light-green darken-1 center z-depth-3"><i class="material-icons">details</i></a></td><td>' + transactions[i].cryptoA + '</td><td>' + transactions[i].cryptoB + '</td><td class=' + is_positive(transactions[i].relative) + '>' + transactions[i].relative + '</td><td class=' + is_positive(transactions[i].absolute) + ' >' + transactions[i].absolute + '</td></tr>')
+            $(table).append('<tr><td><a href="#information" id="' + "matchItem_" + '" class=" modal-trigger waves-effect waves-light btn-floating btn-medium light-green darken-1 center z-depth-3"><i class="material-icons">details</i></a></td><td>' + transactions[i].cryptoA + '</td><td>' + transactions[i].cryptoB + '</td><td class=' + is_positive(transactions[i].relative) + '>' + transactions[i].relative + '</td><td class=' + is_positive(transactions[i].absolute) + ' >' + transactions[i].absolute + '</td></tr>')
         }
     }
 
@@ -100,17 +100,64 @@ $(document).ready(function () {
         clean_input();
     });
 
-    $('#make_id').click(function a() {
+    $('#id_getter').click(function a() {
+        $('#id_restorer_input').val('');
+        console.log("is in clean ")
 
-        console.log(JSON.stringify(transactions));
-        $('#text_id').val(JSON.stringify(transactions));
-        $('#text_id').append
     });
+
+    $('#id_generation_save').click(function a() {
+        try {
+            transactions = JSON.parse($('#id_restorer_input').val())
+            refresh();
+            M.toast({ html: 'Transactions generated!' })
+        }
+        catch (error) {
+            console.log(error);
+            M.toast({ html: 'Transactions generation failed, are you sure the id is correct?' })
+        }
+    });
+
+
+
+    $('#id_generation_cancel').click(function a() {
+        $('#id_restorer_input').val('');
+        console.log("id out clean")
+
+    });
+
+
+    $('#make_id').click(function a() {
+        console.log("id generated");
+        $('#id_location').text(JSON.stringify(transactions))
+    });
+
+    $('#copy_button').click(function a() {
+        copyToClipboard("#id_location")
+        M.toast({ html: 'Id copied!' })
+    });
+
+
+
+     $('[id^="matchItem_"]').on("click", function() {
+        console.log(event.target.id)
+
+        console.log("lol")
+     });
+
 
     $('#save').click(function new_transaction() {
         make_transaction($('#cryptoA').val(), $('#cryptoB').val(), $('#USD_sent').val(), $('#amount_received').val(), $('#amount_sent').val(), $('#amount_received').val());
-        httpGetAsync("https://api.coinmarketcap.com/v1/ticker/", price_updater);
+        refresh();
     });
+
+    function copyToClipboard(element) {
+        var $temp = $("<input>");
+        $("body").append($temp);
+        $temp.val($(element).text()).select();
+        document.execCommand("copy");
+        $temp.remove();
+    }
 
 
 
@@ -124,4 +171,16 @@ $(document).ready(function () {
         console.log("input clean")
     }
 
+    function refresh() {
+        httpGetAsync("https://api.coinmarketcap.com/v1/ticker/", price_updater);
+    }
+
+    window.setInterval(function () {
+        console.log("refreshed")
+        refresh()
+    }, 20000);
+
+
 });
+
+

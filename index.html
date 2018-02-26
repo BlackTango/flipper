@@ -31,7 +31,7 @@
         </div>
         <div class="card-action center">
           <a href="#new_transaction" id="new" class="waves-effect waves-light btn light-green darken-1 center z-depth-3  modal-trigger">New transaction</a>
-          <a class="waves-effect waves-light btn light-green darken-1 center z-depth-3">Transaction ID</a>
+          <a href="#id_restorer" id="id_getter" class="waves-effect waves-light btn light-green darken-1 center z-depth-3 modal-trigger">Transaction ID</a>
         </div>
       </div>
 
@@ -58,8 +58,7 @@
 
         </div>
         <div class="card-action center">
-          <a id="make_id" href="#id-generation" class=" modal-trigger waves-effect waves-light btn light-green darken-1 center z-depth-3">Generate id</a>
-          <a class="waves-effect waves-light btn light-green darken-1 center z-depth-3">Refresh</a>
+          <a id="make_id" href="#id_generation" class=" modal-trigger waves-effect waves-light btn light-green darken-1 center z-depth-3">Generate id</a>
         </div>
       </div>
 
@@ -144,21 +143,58 @@
 
 
   <!-- Modal Structure -->
-  <div id="id-generation" class="modal">
+  <div id="id_generation" class="modal">
     <div class="modal-content">
       <h4>This is your generated ID</h4>
       <p>You can save this string and use it when you come back to track your profits. When you come back, simply press "Transaction
         ID"
       </p>
       <div class="center">
-        <a class="waves-effect waves-light btn light-green darken-1 "><i class="material-icons">content_copy
-          </i></a>
-        <p>iasdiadsifasdif</p>
+        <a id="copy_button" class="waves-effect waves-light btn light-green darken-1 ">
+          <i class="material-icons">content_copy
+          </i>
+        </a>
+        <p id="id_location">iasdiadsifasdif</p>
       </div>
 
     </div>
   </div>
 
+  <!-- Modal Structure -->
+  <div id="id_restorer" class="modal">
+    <div class="modal-content">
+      <h4>Id transactions</h4>
+      <p>Paste your Id here to retore your transactions</p>
+      <div class="input-field col s6">
+        <input id="id_restorer_input" type="text" class="validate">
+        <label for="id_restorer_input">Id</label>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" id="id_generation_cancel" class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
+      <a href="#!" id="id_generation_save" class="modal-action modal-close waves-effect waves-green btn-flat">Save</a>
+    </div>
+  </div>
+
+
+
+  <!-- Modal Structure -->
+  <div id="information" class="modal">
+    <div class="modal-content">
+      <h4>Transaction information</h4>
+      <p>Here you can modify the transaction information, or delete the transaction if no longer necessary</p>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">delete</a>
+
+      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">save</a>
+    </div>
+  </div>
+
+
+  <a id="matchItem_1" class="waves-effect waves-light btn">button</a>
+
+  <a id="matchItem_2" class="waves-effect waves-light btn">button</a>
 
   <!--JavaScript at end of body for optimized loading-->
   <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
