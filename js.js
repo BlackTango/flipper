@@ -26,14 +26,10 @@ $(document).ready(function () {
             console.log(transactions[i].relative, transactions[i].absolute)
         }
 
-        var table = document.getElementById("table_body")
-
-        while (table.firstChild) {
-            table.removeChild(table.firstChild);
-        }
+        $('#table_body').empty();
 
         for (var i = 0; i < transactions.length; i++) {
-            $(table).append('<tr><td><a href="#information" id="' + "matchItem_" + '" class=" modal-trigger waves-effect waves-light btn-floating btn-medium light-green darken-1 center z-depth-3"><i class="material-icons">details</i></a></td><td>' + transactions[i].cryptoA + '</td><td>' + transactions[i].cryptoB + '</td><td class=' + is_positive(transactions[i].relative) + '>' + transactions[i].relative + '</td><td class=' + is_positive(transactions[i].absolute) + ' >' + transactions[i].absolute + '</td></tr>')
+            $('#table_body').append('<tr><td><a href="#information" class=" modal-trigger waves-effect waves-light btn-floating btn-medium light-green darken-1 center z-depth-3"><i id="' + i + '" class="material-icons">add</i></a></td><td>' + transactions[i].cryptoA + '</td><td>' + transactions[i].cryptoB + '</td><td class=' + is_positive(transactions[i].relative) + '>' + transactions[i].relative + '</td><td class=' + is_positive(transactions[i].absolute) + ' >' + transactions[i].absolute + '</td></tr>')
         }
     }
 
@@ -139,12 +135,45 @@ $(document).ready(function () {
 
 
 
-     $('[id^="matchItem_"]').on("click", function() {
-        console.log(event.target.id)
+    $("#table_body").on("click", function () {
+        if (event.target.id != "") {
 
-        console.log("lol")
-     });
 
+            $('#gen_footer').empty();
+            $('#gen_footer').append('<a href="#!" id="cancel" type="cancel" class="modal-action modal-close waves-effect waves-green btn-flat">cancel</a>');
+            $('#gen_footer').append('<a href="#!" id="' + event.target.id+ "del" + '" type="delete" class="modal-action modal-close waves-effect waves-green btn-flat">delete</a>');
+            $('#gen_footer').append('<a href="#!" id="' + event.target.id + '" type="save" class="modal-action modal-close waves-effect waves-green btn-flat">save</a>');
+
+            var a = event.target.id;
+
+            $('#cryptoA_gen').val(transactions[a].cryptoA);
+            $('#amount_sent_gen').val(transactions[a].amount_sent);
+            $('#USD_sent_gen').val(transactions[a].USD_sent);
+            $('#cryptoB_gen').val(transactions[a].cryptoB);
+            $('#amount_received_gen').val(transactions[a].amount_received);
+            $('#USD_received_gen').val(transactions[a].USD_received);
+        }
+    });
+
+//parseInt()
+
+    $('#gen_footer').on("click", function () {
+        var x = event.target.id
+        if(x == "cancel");
+        else if(x.includes("del")){
+            transactions.splice(parseInt(x),1)
+            refresh();
+        } 
+        else {
+            transactions[parseInt(x)].cryptoA =  $('#cryptoA_gen').val();
+            transactions[parseInt(x)].amount_sent = $('#amount_sent_gen').val();
+            transactions[parseInt(x)].USD_sent =  $('#USD_sent_gen').val();
+            transactions[parseInt(x)].cryptoB =  $('#cryptoB_gen').val();
+            transactions[parseInt(x)].amount_received = $('#amount_received_gen').val();
+            transactions[parseInt(x)].USD_received = $('#USD_received_gen').val();
+            refresh();       
+        }
+    });
 
     $('#save').click(function new_transaction() {
         make_transaction($('#cryptoA').val(), $('#cryptoB').val(), $('#USD_sent').val(), $('#amount_received').val(), $('#amount_sent').val(), $('#amount_received').val());
