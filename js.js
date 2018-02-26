@@ -81,8 +81,6 @@ $(document).ready(function () {
             }
     }
 
-    make_transaction("BTC", "ETH", 900, 864.6 / 2, 0.04116530, 0.5);
-
     httpGetAsync("https://api.coinmarketcap.com/v1/ticker/", price_updater);
 
 
@@ -154,8 +152,6 @@ $(document).ready(function () {
             $('#USD_received_gen').val(transactions[a].USD_received);
         }
     });
-
-//parseInt()
 
     $('#gen_footer').on("click", function () {
         var x = event.target.id
