@@ -1,8 +1,6 @@
 // A $( document ).ready() block.
 $(document).ready(function () {
 
-
-
     var transactions = []
     var prices
 
@@ -23,7 +21,6 @@ $(document).ready(function () {
         for (var i = 0; i < transactions.length; i++) {
             transactions[i].relative = calculate_profit(transactions[i]).relative + "%";
             transactions[i].absolute = calculate_profit(transactions[i]).absolute + "%";
-            console.log(transactions[i].relative, transactions[i].absolute)
         }
 
         $('#table_body').empty();
@@ -198,6 +195,7 @@ $(document).ready(function () {
 
     function refresh() {
         httpGetAsync("https://api.coinmarketcap.com/v1/ticker/", price_updater);
+        M.toast({ html: 'refreshed' })
     }
 
     window.setInterval(function () {
