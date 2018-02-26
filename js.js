@@ -32,11 +32,6 @@ $(document).ready(function () {
             table.removeChild(table.firstChild);
         }
 
-
-
-
-
-
         for (var i = 0; i < transactions.length; i++) {
             $(table).append('<tr><td><a href="#modal1" class=" modal-trigger waves-effect waves-light btn light-green darken-1 center z-depth-3"><i class="material-icons">details</i></a></td><td>' + transactions[i].cryptoA + '</td><td>' + transactions[i].cryptoB + '</td><td class=' + is_positive(transactions[i].relative) + '>' + transactions[i].relative + '</td><td class=' + is_positive(transactions[i].absolute) + ' >' + transactions[i].absolute + '</td></tr>')
         }
