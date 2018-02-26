@@ -168,8 +168,9 @@ $(document).ready(function () {
         }
     });
 
+
     $('#save').click(function new_transaction() {
-        make_transaction($('#cryptoA').val(), $('#cryptoB').val(), $('#USD_sent').val(), $('#amount_received').val(), $('#amount_sent').val(), $('#amount_received').val());
+        make_transaction($('#cryptoA').val(), $('#cryptoB').val(), $('#USD_sent').val(), $('#USD_received').val(), $('#amount_sent').val(), $('#amount_received').val());
         refresh();
     });
 
