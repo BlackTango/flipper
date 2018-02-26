@@ -33,8 +33,12 @@ $(document).ready(function () {
         }
 
 
+
+
+
+
         for (var i = 0; i < transactions.length; i++) {
-            $(table).append('<tr><td><a href="#modal1" class=" modal-trigger waves-effect waves-light btn light-green darken-1 center z-depth-3">. . .</a></td><td>' + transactions[i].cryptoA + '</td><td>' + transactions[i].cryptoB + '</td><td class=' + is_positive(transactions[i].relative) + '>' + transactions[i].relative + '</td><td class=' + is_positive(transactions[i].absolute) + ' >' + transactions[i].absolute + '</td></tr>')
+            $(table).append('<tr><td><a href="#modal1" class=" modal-trigger waves-effect waves-light btn light-green darken-1 center z-depth-3"><i class="material-icons">details</i></a></td><td>' + transactions[i].cryptoA + '</td><td>' + transactions[i].cryptoB + '</td><td class=' + is_positive(transactions[i].relative) + '>' + transactions[i].relative + '</td><td class=' + is_positive(transactions[i].absolute) + ' >' + transactions[i].absolute + '</td></tr>')
         }
     }
 
@@ -102,18 +106,20 @@ $(document).ready(function () {
     });
 
     $('#make_id').click(function a() {
-        
-        clean_input();
+
+        console.log(JSON.stringify(transactions));
+        $('#text_id').val(JSON.stringify(transactions));
+        $('#text_id').append
     });
 
     $('#save').click(function new_transaction() {
-        make_transaction($('#cryptoA').val(), $('#cryptoB').val(),$('#USD_sent').val(),$('#amount_received').val(),$('#amount_sent').val(),$('#amount_received').val());
+        make_transaction($('#cryptoA').val(), $('#cryptoB').val(), $('#USD_sent').val(), $('#amount_received').val(), $('#amount_sent').val(), $('#amount_received').val());
         httpGetAsync("https://api.coinmarketcap.com/v1/ticker/", price_updater);
     });
 
-    
 
-    function clean_input(){
+
+    function clean_input() {
         $('#cryptoA').val('');
         $('#amount_sent').val('');
         $('#USD_sent').val('');
