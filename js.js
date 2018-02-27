@@ -202,7 +202,7 @@ $(document).ready(function () {
     window.setInterval(function () {
         console.log("refreshed")
         refresh()
-    }, 20000);
+    }, 60000);
 
 
 });
