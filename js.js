@@ -5,8 +5,6 @@ $(document).ready(function () {
     var prices
 
 
-    // Si il existe des cookies, va les cherches 
-    get_cookies();
 
     // fonction pour faire des assync call pour les api 
     function httpGetAsync(theUrl, callback) {
@@ -220,26 +218,92 @@ $(document).ready(function () {
         refresh()
     }, 60000);
 
-    function update_cookies() {
-        console.log(JSON.stringify(transactions))
-        Cookies.set('lol', JSON.stringify(transactions));
-        console.log("lol")
-        
-        //get_cookies();
+
+
+
+
+    // function make_transaction(cryptoA, cryptoB, USD_sent, USD_received, amount_sent, amount_received) 
+
+    function generate_transaction(money, fees, time1, time2, coin_from, coin_to) {
+        var profit = { absolute: 0, relative: 0 }
+
+        var transaction = {}
+        cryptoA = "bitcoin"
+        cryptoB = "etherum"
+        USD_sent = money
+        USD_received = money - (money * fees)
+        amount_sent = money / coin_from[time1 + 831].price;
+        amount_received = money / coin_to[time1].price;
+
+
+        var nowA = coin_from[time2 + 831].price
+        var nowB = coin_to[time2].price
+
+        console.log(nowA, nowB)
+
+        profit.relative = (((amount_received * nowB) / (amount_sent * nowA)) - 1) * 100;
+        profit.absolute = (((amount_received * nowB) / USD_received) - 1) * 100;
+        profit.relative = profit.relative.toFixed(2);
+        profit.absolute = profit.absolute.toFixed(2);
+
+
+        return profit;
+
     }
 
-    function get_cookies() {
 
-        try {
-            console.log(Cookies.get('transactions'));
-            transactions = JSON.parse(Cookies.get('transactions'))
-        }
-        catch (error) {
-            console.log(error);
+    function get_time(date, coin) {
+
+        for (var i = 0; i < coin.length; i++) {
+            if (Date.parse(coin[i].Date) == Date.parse(date)) return i;
         }
     }
 
-    // juste pour vérifier que la branche fonctionne
+
+
+
+
+    var relative_absolute = { relative: [], absolute: [] }
+
+    function data_generator(numberfrom, numbertoto) {
+        console.log("lol", numberfrom, numbertoto)
+
+        for (var i = numberfrom; i <= numbertoto; i++) {
+            try {
+                relative_absolute.relative.push(generate_transaction(100, 0.01, numberfrom, i, bitcoin, ethereum).relative)
+                relative_absolute.absolute.push(generate_transaction(100, 0.01, numberfrom, i, bitcoin, ethereum).absolute)
+                console.log(bitcoin[i].date)
+
+            } catch (error) {
+                console.log(error)
+            }
+
+
+        }
+
+    }
+
+    var data = {
+        // A labels array that can contain any sort of values
+        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+        // Our series array that contains series objects or in this case series data arrays
+        series: [
+            relative_absolute.relative
+        ]
+    };
+
+    // Create a new line chart object where as first parameter we pass in a selector
+    // that is resolving to our chart container element. The Second parameter
+    // is the actual data object.
+    new Chartist.Line('.ct-chart', data);
+
+
+    data_generator(800, 900);
+    console.log(relative_absolute)
+
+    console.log(ethereum[1000].date, ethereum[1000].price)
+
+
 
 
 });
